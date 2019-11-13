@@ -1,0 +1,23 @@
+﻿Round 1: *[P2, k3]  4 times, p3, k6, p1, repeat from * to end of round.
+
+Round 2: *[P2, LC, RC] 2 times,  p3, C6F, p1, repeat from * to end of round.
+
+Round 3: *P3, [k6, p4] 2 times, k6, p1, repeat from * to end of round.
+
+Round 4: *P3, [C6F, p4] 2 times, k6, p1, repeat from * to end of round.
+
+Round 5: *P3, [k6, p4] 2 times, k6, p1, repeat from * to end of round.
+
+Round 6: *[P2, RC, LC] 2 times, p3, k6, p1, repeat from * to end of round.
+
+Round 7: *[P2, k3] 4 times, p3, k6, p1, repeat from * to end of round.
+
+Round 8: *P1, RC, p2, LC, RC, p2, LC, p2, C6F, p1, repeat from * to end of round.
+
+Round 9: *P1, k3, p4, k6, p4, k3, p2, k6, p1, repeat from * to end of round.
+
+Round 10: *P1, k3, p4, C6B, p4, k3, p2, k6, p1, repeat from * to end of round.
+
+Round 11: *P1, k3, p4, k6, p4, k3, p2, k6, p1, repeat from * to end of round.
+
+Round 12: *P1, [LC, p2, RC] 2 times, p2, k6, p1, repeat from * to end of round.
