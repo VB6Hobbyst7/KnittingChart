@@ -23,22 +23,31 @@ namespace KnittingChartWPF
         public MainWindow()
         {
             InitializeComponent();
-            Grid dynamicGrid = new Grid();
-            dynamicGrid.Width = 400;
-            dynamicGrid.Height = Height;
-            dynamicGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            dynamicGrid.VerticalAlignment = VerticalAlignment.Center;
-            dynamicGrid.ShowGridLines = true;
-            dynamicGrid.Background = new SolidColorBrush(Colors.LightSteelBlue);
+            Grid grid = new Grid();
+            grid.HorizontalAlignment = HorizontalAlignment.Center;
+            grid.VerticalAlignment = VerticalAlignment.Center;
+            grid.Background = new SolidColorBrush(Colors.LightSteelBlue);
 
-            // create columns
-            for (int i = 0; i < 3; i++)
+            List<Image> images = new List<Image>()
             {
-                dynamicGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                dynamicGrid.RowDefinitions.Add(new RowDefinition());
-            }
-        }
+                IconImage(PurlIcon(150)),
+                IconImage(KnitIcon(150)),
+                IconImage(YarnOver(150)),
+                IconImage(K2G(150)),
+                IconImage(P2G(150)),
+                IconImage(SSK(150)),
+                IconImage(SSP(150))
+            };
 
+            for (int i = 0; i < images.Count; i++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                Grid.SetColumn(images[i], i);
+                grid.Children.Add(images[i]);
+            }
+
+            this.Content = grid;
+        }
         public GeometryDrawing IconBase(double size)
         {
             GeometryDrawing rect = new GeometryDrawing(
@@ -49,29 +58,11 @@ namespace KnittingChartWPF
 
             return rect;
         }
-
-        public DrawingGroup PurlIcon()
+        public Image IconImage(DrawingGroup symbolGroup)
         {
-            DrawingGroup aDrawingGroup = new DrawingGroup();
-            aDrawingGroup.Children.Add(IconBase(150));
-
-            GeometryDrawing purlDot =
-                new GeometryDrawing(
-                    new SolidColorBrush(Brushes.Black.Color),
-                    new Pen(Brushes.Black, 4),
-                    new EllipseGeometry(new Point(75, 75), 10, 10)
-                );
-            aDrawingGroup.Children.Add(purlDot);
-
-            return aDrawingGroup;
-        }
-
-        public Image KnittingIcon()
-        {
-            DrawingImage drawingImageSource = new DrawingImage(PurlIcon());
+            DrawingImage drawingImageSource = new DrawingImage(symbolGroup);
             // Freeze the DrawingImage for performance benefits.
             drawingImageSource.Freeze();
-
 
             Image imageControl = new Image()
             {
@@ -79,6 +70,114 @@ namespace KnittingChartWPF
                 Source = drawingImageSource
             };
             return imageControl;
+        }
+
+        public DrawingGroup KnitIcon(double size)
+        {
+            DrawingGroup icon = new DrawingGroup();
+            icon.Children.Add(IconBase(size));
+            return icon;
+        }
+
+        public DrawingGroup PurlIcon(double size)
+        {
+            DrawingGroup icon = KnitIcon(size);
+
+            GeometryDrawing purlDot =
+                new GeometryDrawing(
+                    new SolidColorBrush(Brushes.Black.Color),
+                    new Pen(Brushes.Black, 4),
+                    new EllipseGeometry(new Point(75, 75), 10, 10)
+                );
+            icon.Children.Add(purlDot);
+
+            return icon;
+        }
+
+        public DrawingGroup YarnOver(double size)
+        {
+            DrawingGroup icon = KnitIcon(size);
+            GeometryDrawing yo = new GeometryDrawing(
+                    new SolidColorBrush(Brushes.White.Color),
+                    new Pen(Brushes.Black, 4),
+                    new EllipseGeometry(new Point(75, 75), 10, 10)
+                );
+            icon.Children.Add(yo);
+            return icon;
+        }
+
+        public DrawingGroup K2G(double size)
+        {
+            DrawingGroup icon = KnitIcon(size);
+            Point line1Start = new Point(3 * size / 4, size / 4);
+            Point line1End = new Point(size / 4, 3 * size / 4);
+            GeometryDrawing line1 = new GeometryDrawing(
+                   new SolidColorBrush(Brushes.White.Color),
+                   new Pen(Brushes.Black, 4),
+                   new LineGeometry(line1Start, line1End)
+                );
+            icon.Children.Add(line1);
+
+            Point line2Start = new Point(size / 2, size / 2);
+            Point line2End = new Point(3 * size / 4, 3 * size / 4);
+            GeometryDrawing line2 = new GeometryDrawing(
+                   new SolidColorBrush(Brushes.White.Color),
+                   new Pen(Brushes.Black, 4),
+                   new LineGeometry(line2Start, line2End)
+                );
+            icon.Children.Add(line2);
+            return icon;
+        }
+
+        public DrawingGroup P2G(double size)
+        {
+            DrawingGroup icon = K2G(size);
+            Point bottomLineStart = new Point(.33 * size, .75* size);
+            Point bottomLineEnd = new Point(.66 * size, .75* size);
+            GeometryDrawing line2 = new GeometryDrawing(
+                   new SolidColorBrush(Brushes.White.Color),
+                   new Pen(Brushes.Black, 4),
+                   new LineGeometry(bottomLineStart, bottomLineEnd)
+                );
+            icon.Children.Add(line2);
+            return icon;
+        }
+
+        public DrawingGroup SSK(double size)
+        {
+            DrawingGroup icon = KnitIcon(size);
+            Point line1Start = new Point(.25 * size, .25 * size);
+            Point line1End = new Point(.75 * size , .75 * size);
+            GeometryDrawing line1 = new GeometryDrawing(
+                   new SolidColorBrush(Brushes.White.Color),
+                   new Pen(Brushes.Black, 4),
+                   new LineGeometry(line1Start, line1End)
+                );
+            icon.Children.Add(line1);
+
+            Point line2Start = new Point(size * .5, size *.5 );
+            Point line2End = new Point(size * .25, size * .75);
+            GeometryDrawing line2 = new GeometryDrawing(
+                   new SolidColorBrush(Brushes.White.Color),
+                   new Pen(Brushes.Black, 4),
+                   new LineGeometry(line2Start, line2End)
+                );
+            icon.Children.Add(line2);
+            return icon;
+        }
+
+        public DrawingGroup SSP(double size)
+        {
+            var icon = SSK(size);
+            Point bottomLineStart = new Point(.33 * size, .75 * size);
+            Point bottomLineEnd = new Point(.66 * size, .75 * size);
+            GeometryDrawing line2 = new GeometryDrawing(
+                   new SolidColorBrush(Brushes.White.Color),
+                   new Pen(Brushes.Black, 4),
+                   new LineGeometry(bottomLineStart, bottomLineEnd)
+                );
+            icon.Children.Add(line2);
+            return icon;
         }
     }
 }
