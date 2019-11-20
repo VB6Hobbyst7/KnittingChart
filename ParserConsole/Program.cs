@@ -47,8 +47,30 @@ namespace ParserConsole
 
                         var repeated = sb.ToString();
                         rowPattern = rowPattern.Replace(bracketRepeatPattern.Value, repeated);
-                        rowPattern = Regex.Replace(rowPattern, ",\\s+", ", ");
+                        rowPattern = Regex.Replace(rowPattern, ",\\s+", ",");
                     }
+                    rowPattern.ToLower();
+                    string[] stitches = rowPattern.ToLower().Split(',');
+                    Regex stitchBreakdownRegex = new Regex(@"(?<stitch>\D)(?<pattern>\d*)");
+                    StringBuilder parsedRow = new StringBuilder();
+                    foreach (var item in stitches)
+                    {
+                        Match breakdown = stitchBreakdownRegex.Match(item);
+                        try
+                        {
+                            int count = int.Parse(breakdown.Groups["pattern"].Value);
+                                for (int i = 0; i < count; i++)
+                                {
+                                    parsedRow.Append(count);
+                                }
+                        }
+                        catch (Exception e)
+                        {
+                            parsedRow.Append(breakdown.Groups["pattern"].Value);
+                        }
+                        string stitch = breakdown.Groups["stitch"].Value;
+                    }
+                    rowDefinitions.Add(parsedRow.ToString());
                     rowDefinitions.Add(rowPattern);
                 }
 
