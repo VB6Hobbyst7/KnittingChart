@@ -27,7 +27,6 @@ namespace KnittingChartWPF
         protected Icon(double size)
         {
             ComponentDrawingGroup = new DrawingGroup();
-            Stitch = new Stitch();
 
             GeometryDrawing rect = new GeometryDrawing(
                      new SolidColorBrush(Brushes.White.Color),
@@ -54,9 +53,7 @@ namespace KnittingChartWPF
     {
         public KnitIcon(double size) : base(size)
         {
-            Name = "Knit";
-            Stitch.StitchKey = "K";
-            Stitch.Description = "Just a knit stitch";
+            Stitch = new KnitStitch();
             SetSource();
         }
     }
@@ -64,10 +61,7 @@ namespace KnittingChartWPF
     {
         public PurlIcon(double size) : base(size)
         {
-            Stitch.StitchName = "Purl";
-            Stitch.StitchKey = "P";
-            Stitch.Description = "How are you using this chart if you don't know how to purl?";
-
+            Stitch = new PurlStitch();
             var drawingPosition = size / 2;
             var drawingSize = size * .1;
 
@@ -85,9 +79,7 @@ namespace KnittingChartWPF
     {
         public YOIcon(double size) : base(size)
         {
-            Stitch.StitchKey = "YO";
-            Stitch.StitchName = "Yarn Over";
-            Stitch.Description = "Just drap the yarn over the needle once";
+            Stitch = new YOStitch();
             var drawingPosition = size / 2;
             var drawingSize = size * .1;
 
@@ -104,9 +96,7 @@ namespace KnittingChartWPF
     {
         public K2GIcon(double size) : base(size)
         {
-            Stitch.StitchName = "Knit 2 Together";
-            Stitch.StitchKey = "K2G";
-            Stitch.Description = "Make a knit stitch through two stitches at a time";
+            Stitch = new K2GStitch();
 
             Point line1Start = new Point(.2 * size, .8 * size);
             Point line1End = new Point(.8 * size, .2 * size);
@@ -133,9 +123,7 @@ namespace KnittingChartWPF
     {
         public P2GIcon(double size) : base(size)
         {
-            Stitch.Description = "Purl through two stitches at a time";
-            Stitch.StitchKey = "P2G";
-            Stitch.StitchName = "Purl 2 Together";
+            Stitch = new P2GStitch();
 
             Point line1Start = new Point(.2 * size, .8 * size);
             Point line1End = new Point(.8 * size, .2 * size);
@@ -172,10 +160,7 @@ namespace KnittingChartWPF
     {
         public SSK(double size) : base(size)
         {
-            Stitch.StitchName = "Slip slip knit";
-            Stitch.StitchKey = "SSK";
-            Stitch.Description = "Slip two stitches purlwise; put stitches back on left needles; knit both stitches through the back loop";
-
+            Stitch = new SSKStitch();
             Point line1Start = new Point(.2 * size, .2 * size);
             Point line1End = new Point(.8 * size, .8 * size);
             GeometryDrawing line1 = new GeometryDrawing(
@@ -201,11 +186,8 @@ namespace KnittingChartWPF
     {
         public SSP(double size) : base(size)
         {
-
-            Stitch.StitchName = "Slip slip purl";
-            Stitch.StitchKey = "SSP";
-            Stitch.Description = "Slip two stitches purlwise; put stitches back on left needle; purl 2 stitches through back loop";
-
+            Stitch = new SSPStitch();
+            
             Point line1Start = new Point(.2 * size, .2 * size);
             Point line1End = new Point(.8 * size, .8 * size);
             GeometryDrawing line1 = new GeometryDrawing(
@@ -238,5 +220,12 @@ namespace KnittingChartWPF
         }
     }
 
+    public class CFIcon: Icon
+    {
+        public CFIcon(double size):base(size)
+        {
+
+        }
+    }
 
 }
