@@ -13,8 +13,8 @@ namespace ParserConsole
             string patternPath = @"C:\Users\linma\source\repos\KnittingChart\ParserConsole\TravelingCableHat.txt";
             FileInfo file = new FileInfo(patternPath);
 
-            Regex rowPatternRegex = new Regex(@"\*(?<pattern>.*),");
-            Regex bracketRepeatRegex = new Regex(@"\[(?<bracket>.*)\]\s*(?<count>\d) times");
+            Regex rowMeatRegex = new Regex(@"\*(?<rowMeat>.*),");
+            Regex bracketedBitRegex = new Regex(@"\[(?<bracketedBit>.*)\]\s*(?<count>\d) times");
 
             List<string> rowDefinitions = new List<string>();
 
@@ -27,51 +27,52 @@ namespace ParserConsole
                     {
                         continue;
                     }
-
-                    var rowPattern = rowPatternRegex.Match(line).Groups["pattern"].Value;
-
-
-                    var bracketRepeatPattern = bracketRepeatRegex.Match(rowPattern);
+                    line = line.ToLower();
+                    #region Extract important content from line
+                    var rowMeat = rowMeatRegex.Match(line).Groups["rowMeat"].Value;
+                    var bracketRepeatPattern = bracketedBitRegex.Match(rowMeat);
                     if (bracketRepeatPattern.Success)
                     {
-                        var bracketPattern = bracketRepeatPattern.Groups["bracket"].Value;
+                        var bracketedBit = bracketRepeatPattern.Groups["bracketedBit"].Value;
                         var bracketRepeatCount = int.Parse(bracketRepeatPattern.Groups["count"].Value);
 
-                        StringBuilder sb = new StringBuilder(bracketPattern);
-                        
+                        StringBuilder rowStringBuilder = new StringBuilder(bracketedBit);
+
                         for (int i = 0; i < bracketRepeatCount - 1; i++)
                         {
-                            sb.Append(", ");
-                            sb.Append(bracketPattern);
+                            rowStringBuilder.Append(", ");
+                            rowStringBuilder.Append(bracketedBit);
                         }
 
-                        var repeated = sb.ToString();
-                        rowPattern = rowPattern.Replace(bracketRepeatPattern.Value, repeated);
-                        rowPattern = Regex.Replace(rowPattern, ",\\s+", ",");
+                        var rowString = rowStringBuilder.ToString();
+                        rowMeat = rowMeat.Replace(bracketRepeatPattern.Value, rowString);
                     }
-                    rowPattern.ToLower();
-                    string[] stitches = rowPattern.ToLower().Split(',');
-                    Regex stitchBreakdownRegex = new Regex(@"(?<stitch>\D)(?<pattern>\d*)");
+                    rowMeat = Regex.Replace(rowMeat, ",\\s+", ",");
+                    #endregion
+                    #region clean line
+                    string[] stitches = rowMeat.ToLower().Split(',');
+                    Regex stitchSetRegex = new Regex(@"(?<stitch>\D)(?<pattern>\d*)");
+                    Regex enumeratedStitchSet = new Regex(@"\D\d+\b");
                     StringBuilder parsedRow = new StringBuilder();
                     foreach (var item in stitches)
                     {
-                        Match breakdown = stitchBreakdownRegex.Match(item);
-                        try
+                        Match breakdown = stitchSetRegex.Match(item);
+                        Match breakdown2 = enumeratedStitchSet.Match(item);
+                        if (breakdown2.Success)
                         {
                             int count = int.Parse(breakdown.Groups["pattern"].Value);
+                            string stitch = breakdown.Groups["stitch"].Value;
                                 for (int i = 0; i < count; i++)
                                 {
-                                    parsedRow.Append(count);
+                                    parsedRow.Append(stitch+",");
                                 }
                         }
-                        catch (Exception e)
+                        else
                         {
-                            parsedRow.Append(breakdown.Groups["pattern"].Value);
+                            parsedRow.Append(item+",");
                         }
-                        string stitch = breakdown.Groups["stitch"].Value;
                     }
                     rowDefinitions.Add(parsedRow.ToString());
-                    rowDefinitions.Add(rowPattern);
                 }
 
             }
@@ -82,3 +83,4 @@ namespace ParserConsole
         }
     }
 }
+#endregion
