@@ -37,6 +37,7 @@ namespace KnittingChartWPF
                 new P2GIcon(150),
                 new SSK(150),
                 new SSP(150),
+                new M1Icon(150)
             };
 
             for (int i = 0; i < images.Count; i++)

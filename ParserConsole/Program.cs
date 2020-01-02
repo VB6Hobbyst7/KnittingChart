@@ -17,8 +17,6 @@ namespace ParserConsole
 
             FileInfo file = new FileInfo(patternPath);
             List<string> patternRows = PatternHelper.ParseFileToStringArray(file);
-            foreach (string item in patternRows)
-            FileInfo file = new FileInfo(patternPath);
 
             Regex rowMeatRegex = new Regex(@"\*(?<rowMeat>.*),");
             Regex bracketedBitRegex = new Regex(@"\[(?<bracketedBit>.*)\]\s*(?<count>\d) times");
@@ -69,14 +67,14 @@ namespace ParserConsole
                         {
                             int count = int.Parse(breakdown.Groups["pattern"].Value);
                             string stitch = breakdown.Groups["stitch"].Value;
-                                for (int i = 0; i < count; i++)
-                                {
-                                    parsedRow.Append(stitch+",");
-                                }
+                            for (int i = 0; i < count; i++)
+                            {
+                                parsedRow.Append(stitch + ",");
+                            }
                         }
                         else
                         {
-                            parsedRow.Append(item+",");
+                            parsedRow.Append(item + ",");
                         }
                     }
                     rowDefinitions.Add(parsedRow.ToString());

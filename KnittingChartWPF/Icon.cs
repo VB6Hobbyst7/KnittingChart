@@ -228,4 +228,25 @@ namespace KnittingChartWPF
         }
     }
 
+    public class M1Icon : Icon
+    {
+        public M1Icon(double size) : base(size)
+        {
+            Path path = new Path
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 1
+            };
+
+            Point leftLegStart = new Point(180, 260);
+            Point leftLegEnd = new Point(25, 90);
+            Point leftlegInflection1 = new Point(140, 230);
+            Point leftLegInflection2 = new Point(5, 140);
+            PolyBezierSegment leftLeg = new PolyBezierSegment();
+            leftLeg.Points.Add(leftLegStart);
+            leftLeg.Points.Add(leftlegInflection1);
+            leftLeg.Points.Add(leftLegInflection2);
+            leftLeg.Points.Add(leftLegEnd);
+        }
+    }
 }

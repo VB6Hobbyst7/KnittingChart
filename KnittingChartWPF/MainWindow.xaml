@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KnittingChartWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450">
+        Title="MainWindow" Height="400" Width="400"
+        >
     <Grid>
-
+        <Canvas Background="Aquamarine">
+            <!--<Path Stroke="Black" StrokeThickness="1" Canvas.Left="25" Canvas.Top="18">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigureCollection>
+                                <PathFigure StartPoint="0,350">
+                                    <PathFigure.Segments>
+                                        <PathSegmentCollection>
+                                            <QuadraticBezierSegment Point1="300,350" Point2="350,100" />
+                                            <QuadraticBezierSegment Point1="150,-100" Point2="0,100" />
+                                            <QuadraticBezierSegment Point1="50,300" Point2="350,350" />
+                                        </PathSegmentCollection>
+                                    </PathFigure.Segments>
+                                </PathFigure>
+                            </PathFigureCollection>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>-->
+            <Path Stroke="Black" StrokeThickness="1" 
+  Data="M 10,100 L 100,100 100,50 Z M 10,10 100,10 100,40 Z" />
+        </Canvas>
     </Grid>
 </Window>
